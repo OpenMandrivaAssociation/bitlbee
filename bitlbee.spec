@@ -17,6 +17,7 @@ Group:		Networking/Chat
 URL:		http://bitlbee.org/
 Source0:	http://get.bitlbee.org/src/%{name}-%{version}.tar.bz2
 #Patch0:		http://get.bitlbee.org/patches/%{name}-%{version}-msn6.akke.diff.bz2
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Buildrequires:	glib2-devel libsoup-devel >= 1.99.23
 Requires(post):	ccp
 Requires(pre):	rpm-helper
