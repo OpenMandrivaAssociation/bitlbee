@@ -26,7 +26,7 @@ Requires:	xinetd
 %description
 %{name} is a proxy which accepts connections from any irc-client
 and allows you to communicate using following instant messaging
-protocols.
+protocols:
 
  - ICQ
  - AIM
