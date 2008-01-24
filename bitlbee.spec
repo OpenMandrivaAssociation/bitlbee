@@ -1,6 +1,6 @@
 %define	name	bitlbee
 %define	version	1.1dev
-%define	rel	1
+%define	rel	2
 %define release %mkrel %{rel}
 %define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
 %define	bitlbid	_bitlbee
@@ -12,7 +12,7 @@ Summary:	%{Summary}
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-License:	GPL
+License:	GPLv2+
 Group:		Networking/Chat
 URL:		http://bitlbee.org/
 Source0:	http://get.bitlbee.org/src/%{name}-%{version}.tar.bz2
