@@ -1,6 +1,6 @@
 %define	name	bitlbee
-%define	version	1.1dev
-%define	rel	2
+%define	version	1.2
+%define	rel	1
 %define release %mkrel %{rel}
 %define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
 %define	bitlbid	_bitlbee
@@ -15,7 +15,7 @@ Release:	%{release}
 License:	GPLv2+
 Group:		Networking/Chat
 URL:		http://bitlbee.org/
-Source0:	http://get.bitlbee.org/src/%{name}-%{version}.tar.bz2
+Source0:	http://get.bitlbee.org/src/%{name}-%{version}.tar.gz
 #Patch0:		http://get.bitlbee.org/patches/%{name}-%{version}-msn6.akke.diff.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Buildrequires:	glib2-devel libsoup-devel >= 1.99.23
