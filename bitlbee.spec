@@ -5,6 +5,8 @@
 %define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
 %define	bitlbid	_bitlbee
 
+%define _requires_exceptions GLIBC_PRIVATE
+
 # NOTE TO BACKPORTERS: You will need to remove ccp or include ccp in your
 #			rpm repository
 
