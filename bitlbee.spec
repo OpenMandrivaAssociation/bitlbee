@@ -1,5 +1,5 @@
 %define	name	bitlbee
-%define	version	1.2.2
+%define	version	1.2.3
 %define	rel	1
 %define release %mkrel %{rel}
 %define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
