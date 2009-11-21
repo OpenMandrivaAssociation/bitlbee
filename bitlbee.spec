@@ -1,11 +1,9 @@
 %define	name	bitlbee
 %define	version	1.2.3
-%define	rel	2
+%define	rel	3
 %define release %mkrel %{rel}
 %define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
 %define	bitlbid	_bitlbee
-
-%define _requires_exceptions GLIBC_PRIVATE
 
 # NOTE TO BACKPORTERS: You will need to remove ccp or include ccp in your
 #			rpm repository
@@ -18,12 +16,16 @@ License:	GPLv2+
 Group:		Networking/Chat
 URL:		http://bitlbee.org/
 Source0:	http://get.bitlbee.org/src/%{name}-%{version}.tar.gz
-#Patch0:		http://get.bitlbee.org/patches/%{name}-%{version}-msn6.akke.diff.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Buildrequires:	glib2-devel libsoup-devel >= 1.99.23
 Requires(post):	ccp
 Requires(pre):	rpm-helper
 Requires:	xinetd
+
+# (misc) 11/2009 : seen this message when build on x86_64
+#* Linking bitlbee
+# /usr/bin/ld: i386 architecture of input file `/usr/lib/libresolv.a(res_data.o)' is incompatible with i386:x86-64 output
+BuildConflicts: glibc-static-devel 
 
 %description
 %{name} is a proxy which accepts connections from any irc-client
@@ -38,7 +40,6 @@ protocols:
 
 %prep
 %setup -q
-#%patch0 -p0 -b .msn6
 # Use the nick "bitlbee" instead of "root"
 %{__sed} -i 's/ROOT_NICK "root"/ROOT_NICK "bitlbee"/' bitlbee.h
 
