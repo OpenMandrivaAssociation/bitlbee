@@ -1,6 +1,6 @@
 %define	name	bitlbee
-%define	version	1.2.3
-%define	rel	3
+%define	version	1.2.5
+%define	rel	1
 %define release %mkrel %{rel}
 %define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
 %define	bitlbid	_bitlbee
@@ -116,5 +116,3 @@ service xinetd condrestart
 
 %defattr(0600,%{bitlbid},%{bitlbid},0700)
 %{_var}/lib/%{name}
-
-
