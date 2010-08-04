@@ -1,5 +1,5 @@
 %define	name	bitlbee
-%define	version	1.2.7
+%define	version	1.2.8
 %define	rel	1
 %define release %mkrel %{rel}
 %define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
@@ -22,11 +22,6 @@ Requires(post):	ccp
 Requires(pre):	rpm-helper
 Requires:	xinetd
 
-# (misc) 11/2009 : seen this message when build on x86_64
-#* Linking bitlbee
-# /usr/bin/ld: i386 architecture of input file `/usr/lib/libresolv.a(res_data.o)' is incompatible with i386:x86-64 output
-BuildConflicts: glibc-static-devel 
-
 %description
 %{name} is a proxy which accepts connections from any irc-client
 and allows you to communicate using following instant messaging
@@ -44,7 +39,7 @@ protocols:
 %{__sed} -i 's/ROOT_NICK "root"/ROOT_NICK "bitlbee"/' bitlbee.h
 
 %build
-perl -pi -e "s#CFLAGS=-O3#CFLAGS=$RPM_OPT_FLAGS -O3#g" configure
+perl -pi -e "s#CFLAGS=-O3#CFLAGS=%optflags -O3#g" configure
 ./configure	--prefix=%{_prefix} \
 		--etcdir=%{_sysconfdir}/%{name} \
 		--libdir=%{_libdir}/%{name}
