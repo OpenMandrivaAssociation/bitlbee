@@ -1,5 +1,5 @@
 %define	name	bitlbee
-%define	version	1.2.8
+%define	version	3.0
 %define	rel	1
 %define release %mkrel %{rel}
 %define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
@@ -17,7 +17,8 @@ Group:		Networking/Chat
 URL:		http://bitlbee.org/
 Source0:	http://get.bitlbee.org/src/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Buildrequires:	glib2-devel libsoup-devel >= 1.99.23
+BuildRequires:	glib2-devel libsoup-devel >= 1.99.23
+BuildRequires:	libotr-devel
 Requires(post):	ccp
 Requires(pre):	rpm-helper
 Requires:	xinetd
@@ -31,7 +32,8 @@ protocols:
  - AIM
  - MSN
  - YIM
- - Jabber (including Google talk)
+ - Jabber (including Google Talk and Facebook)
+ - Twitter
 
 %prep
 %setup -q
@@ -42,7 +44,8 @@ protocols:
 perl -pi -e "s#CFLAGS=-O3#CFLAGS=%optflags -O3#g" configure
 ./configure	--prefix=%{_prefix} \
 		--etcdir=%{_sysconfdir}/%{name} \
-		--libdir=%{_libdir}/%{name}
+		--libdir=%{_libdir}/%{name} \
+		--otr=1
 
 %make
 
