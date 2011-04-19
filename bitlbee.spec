@@ -19,6 +19,7 @@ Source0:	http://get.bitlbee.org/src/%{name}-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	glib2-devel libsoup-devel >= 1.99.23
 BuildRequires:	libotr-devel
+BuildRequires:	gnutls-devel
 Requires(post):	ccp
 Requires(pre):	rpm-helper
 Requires:	xinetd
