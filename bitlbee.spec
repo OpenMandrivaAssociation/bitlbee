@@ -1,5 +1,5 @@
 %define	name	bitlbee
-%define	version	3.0.2
+%define	version	3.0.3
 %define	rel	1
 %define release %mkrel %{rel}
 %define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
@@ -42,7 +42,7 @@ protocols:
 %{__sed} -i 's/ROOT_NICK "root"/ROOT_NICK "bitlbee"/' bitlbee.h
 
 %build
-perl -pi -e "s#CFLAGS=-O3#CFLAGS=%optflags -O3#g" configure
+perl -pi -e "s#CFLAGS=-O3#CFLAGS=%{optflags} -O3#g" configure
 ./configure	--prefix=%{_prefix} \
 		--etcdir=%{_sysconfdir}/%{name} \
 		--libdir=%{_libdir}/%{name} \
@@ -85,7 +85,7 @@ if [ $1 = 2 -a -d "%{_var}/%{name}" -a ! -d "%{_var}/lib/%{name}" ]; then
 fi
 
 %post
-ccp --delete --ifexists --set NoOprhans --oldfile %{_sysconfdir}/%{name}/%{name}.conf --newfile %{_sysconfdir}/%{name}/%{name}.conf.rpmnew
+ccp --delete --ifexists --set NoOrphans --oldfile %{_sysconfdir}/%{name}/%{name}.conf --newfile %{_sysconfdir}/%{name}/%{name}.conf.rpmnew
 service xinetd condrestart
 if ! pidof xinetd >/dev/null 2>/dev/null; then
    echo "Use the following command to start %{name}: /sbin/service xinetd start"
