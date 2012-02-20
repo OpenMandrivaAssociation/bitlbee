@@ -1,5 +1,5 @@
 %define	name	bitlbee
-%define	version	3.0.3
+%define	version	3.0.5
 %define	rel	1
 %define release %mkrel %{rel}
 %define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
@@ -16,7 +16,6 @@ License:	GPLv2+
 Group:		Networking/Chat
 URL:		http://bitlbee.org/
 Source0:	http://get.bitlbee.org/src/%{name}-%{version}.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	glib2-devel libsoup-devel >= 1.99.23
 BuildRequires:	libotr-devel
 BuildRequires:	gnutls-devel
@@ -94,9 +93,6 @@ fi
 %postun
 %_postun_userdel %{bitlbid}
 service xinetd condrestart
-
-%clean
-%{__rm} -rf %{buildroot}
 
 %files
 %defattr(0750,root,%{bitlbid},0755)
