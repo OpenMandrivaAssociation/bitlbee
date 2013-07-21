@@ -11,8 +11,8 @@
 
 Summary:	%{Summary}
 Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Version:	3.2
+Release:	1
 License:	GPLv2+
 Group:		Networking/Chat
 URL:		http://bitlbee.org/
@@ -112,3 +112,4 @@ service xinetd condrestart
 
 %defattr(0600,%{bitlbid},%{bitlbid},0700)
 %{_var}/lib/%{name}
+

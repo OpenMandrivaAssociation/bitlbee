@@ -1,3 +1,5 @@
-sources:
-  "bitlbee-3.0.3.tar.gz": 4140eb7aaa2c6a39fa059d19f8fbaec0d7a1ebff
+removed_sources:
+  bitlbee-3.0.3.tar.gz: 4140eb7aaa2c6a39fa059d19f8fbaec0d7a1ebff
   bitlbee-3.0.6.tar.gz: 6ac7cab4dab422f9baac97818e69ee9934db345c
+sources:
+  bitlbee-3.2.tar.gz: 21e17f082c776566429603b1e8c966983a75ac9e
