@@ -1,0 +1,13 @@
+--- a/init/bitlbee.service.in
++++ b/init/bitlbee.service.in
+@@ -3,7 +3,9 @@ Description=BitlBee IRC/IM gateway
+ After=syslog.target
+ 
+ [Service]
+-ExecStart=@sbindir@/bitlbee -F -n
++Type=simple
++ExecStart=@sbindir@bitlbee -D -n
++Restart=always
+ 
+ [Install]
+ WantedBy=multi-user.target

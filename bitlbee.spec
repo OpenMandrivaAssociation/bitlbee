@@ -1,34 +1,31 @@
-%define debug_package %nil
-%define	name	bitlbee
-%define	version	3.0.6
-%define	rel	1
-%define release %mkrel %{rel}
-%define	Summary	IRC proxy to connect to ICQ, AOL, MSN and Jabber
-%define	bitlbid	_bitlbee
+%define	bitlbid	bitlbee
 
-# NOTE TO BACKPORTERS: You will need to remove ccp or include ccp in your
-#			rpm repository
-
-Summary:	%{Summary}
-Name:		%{name}
-Version:	3.2
+Summary:	IRC proxy to connect to ICQ, AOL, MSN and Jabber
+Name:		bitlbee
+Version:	3.2.1
 Release:	1
 License:	GPLv2+
-Group:		Networking/Chat
-URL:		http://bitlbee.org/
+Group:		Networking/Instant messaging
+Url:		http://bitlbee.org/
 Source0:	http://get.bitlbee.org/src/%{name}-%{version}.tar.gz
-BuildRequires:	pkgconfig(glib-2.0) libsoup-devel >= 1.99.23
-BuildRequires:	libotr-devel
+# When the above patches will  be consolidated upstream, this should merge
+# with Patch1 or Patch2 or something like that
+Patch5:		bitlbee-forkdaemon.patch
+# Patch rejected upstream, however we need to keep this, because
+# of the SELinux policy is set up for this mode of operation.
+Patch6:		bitlbee-systemd.patch
+BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gnutls)
+BuildRequires:	pkgconfig(libgcrypt)
+BuildRequires:	pkgconfig(libsoup-2.4)
+BuildRequires:	pkgconfig(systemd)
 Requires(post):	ccp
-Requires(pre):	rpm-helper
-Requires:	xinetd
+Requires(pre,post,preun):	rpm-helper
 
 %description
 %{name} is a proxy which accepts connections from any irc-client
 and allows you to communicate using following instant messaging
 protocols:
-
  - ICQ
  - AIM
  - MSN
@@ -36,45 +33,21 @@ protocols:
  - Jabber (including Google Talk and Facebook)
  - Twitter
 
-%prep
-%setup -q
-# Use the nick "bitlbee" instead of "root"
-%{__sed} -i 's/ROOT_NICK "root"/ROOT_NICK "bitlbee"/' bitlbee.h
-
-%build
-perl -pi -e "s#CFLAGS=-O3#CFLAGS=%{optflags} -O3#g" configure
-./configure	--prefix=%{_prefix} \
-		--etcdir=%{_sysconfdir}/%{name} \
-		--libdir=%{_libdir}/%{name} \
-		--otr=1
-
-%make
-
-%install
-%{__rm} -rf %{buildroot}
-%{makeinstall_std} install-etc
-
-
-%{__install} -d   %{buildroot}%{_var}/lib/%{name}
-%{__install} -d   %{buildroot}%{_sysconfdir}/xinetd.d/
-%{__cat} << EOF > %{buildroot}%{_sysconfdir}/xinetd.d/%{name}
-# default: on
-# description: bitlbee IRC2IM-proxy.
-service ircd
-{
-	disable			= no
-	socket_type		= stream
-	protocol		= tcp
-	wait			= no
-	user			= %{bitlbid}
-	server			= %{_sbindir}/%{name}
-	log_on_success		+= DURATION USERID HOST
-	log_on_failure		+= USERID HOST ATTEMPT
-	nice			= 10
-	bind			= 127.0.0.1
-}
-EOF
-
+%files
+%defattr(0750,root,%{bitlbid},0755)
+%{_sbindir}/%{name}
+%defattr(0644,root,root,0755)
+%doc doc/AUTHORS doc/README doc/FAQ
+%doc doc/CHANGES doc/CREDITS
+%doc doc/user-guide/
+%{_datadir}/%{name}/help.txt
+%dir %{_datadir}/%{name}/
+%{_mandir}/man?/*
+%config(noreplace) %{_sysconfdir}/%{name}/motd.txt
+%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
+%{_unitdir}/%{name}*
+%defattr(0600,%{bitlbid},%{bitlbid},0700)
+%{_var}/lib/%{name}
 
 %pre
 %_pre_useradd %{bitlbid} %{_var}/%{name} /bin/true
@@ -86,30 +59,36 @@ fi
 
 %post
 ccp --delete --ifexists --set NoOrphans --oldfile %{_sysconfdir}/%{name}/%{name}.conf --newfile %{_sysconfdir}/%{name}/%{name}.conf.rpmnew
-service xinetd condrestart
-if ! pidof xinetd >/dev/null 2>/dev/null; then
-   echo "Use the following command to start %{name}: /sbin/service xinetd start"
-fi
+%systemd_post %{name}.service
+
+%preun
+%systemd_preun %{name}.service
 
 %postun
-%_postun_userdel %{bitlbid}
-service xinetd condrestart
+%systemd_postun_with_restart %{name}.service
 
-%files
-%defattr(0750,root,%{bitlbid},0755)
-%{_sbindir}/%{name}
-%defattr(0644,root,root,0755)
-%doc doc/AUTHORS doc/README doc/FAQ
-%doc doc/CHANGES doc/CREDITS
-%doc doc/user-guide/
+#----------------------------------------------------------------------------
 
-%{_datadir}/%{name}/help.txt
-%dir %{_datadir}/%{name}/
-%{_mandir}/man?/*
-%config(noreplace) %{_sysconfdir}/%{name}/motd.txt
-%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
-%config(noreplace) %{_sysconfdir}/xinetd.d/%{name}
+%prep
+%setup -q
+%apply_patches
+# Use the nick "bitlbee" instead of "root"
+sed -i 's/ROOT_NICK "root"/ROOT_NICK "bitlbee"/' bitlbee.h
 
-%defattr(0600,%{bitlbid},%{bitlbid},0700)
-%{_var}/lib/%{name}
+%build
+perl -pi -e "s#CFLAGS=\"-O2#CFLAGS=\"%{optflags}#g" configure
+./configure	--prefix=%{_prefix} \
+		--etcdir=%{_sysconfdir}/%{name} \
+		--libdir=%{_libdir}/%{name} \
+		--strip=0 \
+		--otr=0
+
+%make
+
+%install
+%makeinstall_std install-etc
+install -d %{buildroot}%{_var}/lib/%{name}
+
+install -p -d %{buildroot}%{_unitdir}
+install -p -m 644 init/%{name}{.service,@.service,.socket} %{buildroot}%{_unitdir}
 
