@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   bitlbee-3.2.1.tar.gz: 954471ab87206826c072f31b3def40a1be5a78f5
+sources:
+  bitlbee-3.2.2.tar.gz: 7e3cfe2b6bf4e8e603c74e7587307a6f5d267e9c
