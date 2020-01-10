@@ -71,7 +71,7 @@ ccp --delete --ifexists --set NoOrphans --oldfile %{_sysconfdir}/%{name}/%{name}
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 # Use the nick "bitlbee" instead of "root"
 sed -i 's/ROOT_NICK "root"/ROOT_NICK "bitlbee"/' bitlbee.h
 
