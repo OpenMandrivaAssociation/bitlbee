@@ -3,7 +3,7 @@
 Summary:	IRC proxy to connect to ICQ, AOL, MSN and Jabber
 Name:		bitlbee
 Version:	3.2.1
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Networking/Instant messaging
 Url:		http://bitlbee.org/
