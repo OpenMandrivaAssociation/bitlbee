@@ -1,13 +1,14 @@
---- a/init/bitlbee.service.in
-+++ b/init/bitlbee.service.in
-@@ -3,7 +3,9 @@ Description=BitlBee IRC/IM gateway
- After=syslog.target
+diff -up bitlbee-3.6/init/bitlbee.service.in.2~ bitlbee-3.6/init/bitlbee.service.in
+--- bitlbee-3.6/init/bitlbee.service.in.2~	2023-09-15 19:31:27.166479229 +0200
++++ bitlbee-3.6/init/bitlbee.service.in	2023-09-15 19:32:35.306131557 +0200
+@@ -2,7 +2,9 @@
+ Description=BitlBee IRC/IM gateway
  
  [Service]
--ExecStart=@sbindir@/bitlbee -F -n
+-ExecStart=@sbindir@bitlbee -F -n
 +Type=simple
-+ExecStart=@sbindir@bitlbee -D -n
 +Restart=always
++ExecStart=@sbindir@bitlbee -D -n
+ KillMode=process
  
  [Install]
- WantedBy=multi-user.target

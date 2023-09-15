@@ -2,8 +2,8 @@
 
 Summary:	IRC proxy to connect to ICQ, AOL, MSN and Jabber
 Name:		bitlbee
-Version:	3.2.1
-Release:	3
+Version:	3.6
+Release:	1
 License:	GPLv2+
 Group:		Networking/Instant messaging
 Url:		http://bitlbee.org/
@@ -19,6 +19,7 @@ BuildRequires:	pkgconfig(gnutls)
 BuildRequires:	pkgconfig(libgcrypt)
 BuildRequires:	pkgconfig(libsoup-2.4)
 BuildRequires:	pkgconfig(systemd)
+BuildRequires:	rpm-helper
 Requires(post):	ccp
 Requires(pre,post,preun):	rpm-helper
 
@@ -80,6 +81,7 @@ perl -pi -e "s#CFLAGS=\"-O2#CFLAGS=\"%{optflags}#g" configure
 ./configure	--prefix=%{_prefix} \
 		--etcdir=%{_sysconfdir}/%{name} \
 		--libdir=%{_libdir}/%{name} \
+		--sbindir=%{_sbindir} \
 		--strip=0 \
 		--otr=0
 
