@@ -6,7 +6,7 @@ Version:	3.6
 Release:	1
 License:	GPLv2+
 Group:		Networking/Instant messaging
-Url:		http://bitlbee.org/
+Url:		https://bitlbee.org/
 Source0:	http://get.bitlbee.org/src/%{name}-%{version}.tar.gz
 # When the above patches will  be consolidated upstream, this should merge
 # with Patch1 or Patch2 or something like that
