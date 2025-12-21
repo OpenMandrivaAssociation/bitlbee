@@ -14,6 +14,11 @@ Patch5:		bitlbee-forkdaemon.patch
 # Patch rejected upstream, however we need to keep this, because
 # of the SELinux policy is set up for this mode of operation.
 Patch6:		bitlbee-systemd.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gnutls)
 BuildRequires:	pkgconfig(libgcrypt)
